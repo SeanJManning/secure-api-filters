@@ -2,6 +2,8 @@
 
 Have you ever submitted a filter query to a web application or API backend and recieved a result, only to later realize that it wasn't actually filtering as you had anticipated? This gem helps you to avoid that scenario with type casted filters for your `ActiveRecord` models in Rails and Sinatra.
 
+Coming soon: sorts and custom sorts
+
 ![Travis Build status](https://travis-ci.org/SeanJManning/secure-api-filters.svg?branch=master)
 
 ## Usage
@@ -143,6 +145,19 @@ class Student
   custom_filter :gpas_more_than, :float, ->(value, context) {
     # value will be passed into the block as a Float object
   }
+end
+```
+
+#### Filtering on Relationships
+
+```ruby
+class Student
+  belongs_to :university
+  include SecureApiFilters
+
+  custom_filter :university_mascot, :string, ->(value, _context) {
+    joins(:university).where('lower(universities.mascot) = ?', value.downcase)
+  };
 end
 ```
 
