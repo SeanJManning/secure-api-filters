@@ -177,6 +177,10 @@ The `SecureApiFilter` module throws four unique errors:
 
 It is up to you to rescue these errors and provide a response to the client.
 
+## Coming Soon
+
+Sorts and Custom Sorts
+
 ## Installation
 
 ### Rails
