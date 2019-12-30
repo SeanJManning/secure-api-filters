@@ -10,6 +10,7 @@ end
 
 class Student < ActiveRecord::Base
   include SecureApiFilters
+  belongs_to :university
 
   filters :first_name, :last_name, :student_id, :age, :weighted_gpa, :gpa, :honor_roll
 
@@ -27,7 +28,15 @@ class Student < ActiveRecord::Base
   custom_filter :lname, :custom_definition, ->(value, _context) {
     where('last_name LIKE ?', value)
   }
+
+  custom_filter :university_mascot, :string, ->(value, _context) {
+    joins(:university).where('lower(universities.mascot) = ?', value.downcase)
+  }
 end
 
 class User < ActiveRecord::Base
+end
+
+class University < ActiveRecord::Base
+  has_many :students
 end
