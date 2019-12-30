@@ -146,6 +146,19 @@ class Student
 end
 ```
 
+#### Filtering on Relationships
+
+```ruby
+class Student
+  belongs_to :university
+  include SecureApiFilters
+
+  custom_filter :university_mascot, :string, ->(value, _context) {
+    joins(:university).where('lower(universities.mascot) = ?', value.downcase)
+  };
+end
+```
+
 #### Using `custom_filter` in other areas of your application
 
 The `custom_filter`class method generates a unique class method, `custom_filter_{scope_name}` which could be used as a scope in other areas of your application:

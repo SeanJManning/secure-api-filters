@@ -12,11 +12,16 @@ ActiveRecord::Schema.define do
     t.float :gpa
     t.boolean :honor_roll
     t.datetime :graduation_date
+    t.integer :university_id
     t.timestamps
   end
 
   create_table :users, force: true do |t|
     t.boolean :admin
     t.timestamps
+  end
+
+  create_table :universities, force: true do |t|
+    t.string :mascot
   end
 end
