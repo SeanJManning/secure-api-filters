@@ -1,6 +1,6 @@
 # Secure Api Filters
 
-Have you ever submitted a filter query to a web application or API backend and recieved a result, only to later realize that it wasn't actually filtering as you had anticipated? This gem helps you to avoid that scenario with type casted filters for your `ActiveRecord` models in Rails and Sinatra.
+Have you ever submitted a filter query to a web application or API backend and received a result, only to later realize that it wasn't actually filtering as you had anticipated? This gem helps you to avoid that scenario with type casted filters for your `ActiveRecord` models in Rails and Sinatra.
 
 ![Travis Build status](https://travis-ci.org/SeanJManning/secure-api-filters.svg?branch=master)
 
@@ -86,7 +86,7 @@ custom_filter :fname, ->(value, _context) {
 
 ### The `custom_filter` method
 
-`custom_filter` has a default type of `string`. The available type options are `:string, :text, :bigint, :integer, :float, :decimal, :boolean`. It recieves the optional `context` argument from the `_filter` method which can be used to help scope the records returned.
+`custom_filter` has a default type of `string`. The available type options are `:string, :text, :bigint, :integer, :float, :decimal, :boolean`. It receives the optional `context` argument from the `_filter` method which can be used to help scope the records returned.
 
 #### Examples
 
@@ -110,7 +110,7 @@ end
 
 #### Custom type definitions
 
-If you do not agree with the predefined type definitions for `:string, :text, :bigint, :integer, :float, :decimal, :boolean` you may add your own global definitions as class methods into the `SecureApiFilters::Definitons` module. Your class method should recieve a single argument and return either `true` or `false`. `SecureApiFilters::InvalidValueError` will be raised if `false` is returned.
+If you do not agree with the predefined type definitions for `:string, :text, :bigint, :integer, :float, :decimal, :boolean` you may add your own global definitions as class methods into the `SecureApiFilters::Definitions` module. Your class method should receive a single argument and return either `true` or `false`. `SecureApiFilters::InvalidValueError` will be raised if `false` is returned.
 
 ```ruby
 module SecureApiFilters
@@ -130,7 +130,7 @@ end
 
 #### Value conversion
 
-After the value passed into `custom_filter` is validated to be of the specified datatype, it is converted from a string to that datatype _before_ it is called in the proceeding block. Custom defined datatypes will always remain a string.
+After the value passed into `custom_filter` is validated to be of the specified data type, it is converted from a string to that data type _before_ it is called in the proceeding block. Custom defined data types will always remain a string.
 
 ```ruby
 class Student
@@ -179,7 +179,18 @@ It is up to you to rescue these errors and provide a response to the client.
 
 ## Coming Soon
 
-Sorts and Custom Sorts
+- Sorts and Custom Sorts
+- Make attribute filters of `has_one` and `belongs_to` relationships available in the filters method.
+
+For example:
+```ruby
+class Student
+  belongs_to :university
+  include SecureApiFilters
+
+  filters :university_mascot
+end
+```
 
 ## Installation
 
